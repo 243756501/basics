@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			/******
+			 * XMLHttpRequest属性
+			 * -----
+			 * readyState
+			 * 0  初始化XMLHttpRequest对象已创建或者已被abort()方法重置
+			 * 1 Open方法已经调用，但是send方法未调用，请求还没有被发送
+			 * 2 Send方法已调用，Http请求已发送到Web服务器，未接受到响应
+			 * 3  所有响应头部已经接收到。响应体开始接收但未完成
+			 * 4 Http响应已经完全接收
+			 * -----
+			 * responseText
+			 * 目前为止为服务器接收到的响应体(不包括头部)，或者如果还没有接受到数据的话 就是空字符串
+			 * 当readystate=4时 这个属性才有值 反之是空的字符串
+			 * -----
+			 * responseXML
+			 * 对请求的相应，解析为XML并作为Document对象返回
+			 * -----
+			 * status
+			 * 服务器返回的http状态码 
+			 * -----
+			 * statusText
+			 * 服务器返回的Http状态码对应的解释
+			 * -----
+			 * ****** 
+			 * 事件
+			 * -----
+			 * onreadystatechange
+			 * 监听readystate的手续
+			 * -----
+			 * ******
+			 * 常用方法
+			 * -----
+			 * abort()
+			 * 取消当前响应
+			 * -----
+			 * open()
+			 * 初始化Http请求参数 但不发送
+			 * -----
+			 * send()
+			 * 发送Http请求，使用传递给Open方法的参数，以及传递给该方法的可选请求体
+			 * -----
+			 * *****
+			 * IE浏览器通过ActiveObject的对象来创建XMLHttpRequest对象
+			 * *****
+			 */
+			var xmlhttp;
+
+			function createXML() {
+				//非IE浏览器
+				if(window.XMLHttpRequest) {
+					xmlhttp = new XMLHttpRequest();
+					console.log("xml初始化")
+				}
+				//IE浏览器
+				if(window.ActiveXObject) {
+					try {
+						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						alert("xml初始化")
+					} catch(e) {
+						try {
+							xmlhttp = new ActiveXOject("msxml2.XMLHTTP");
+						} catch(ex) {
+							console.log(ex)
+						}
+					}
+
+				}
+			}
+
+			// get请求
+			// get请求添加查询参数
+			function urlParam(url, name, value) {
+				url += (url.indexOf('?') == -1) ? '?' : '&';
+				url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+				return url;
+			}
+
+			// get请求
+			url = urlParam("example.php", "name", "ccb");
+			url = urlParam(url, "pass", "123");
+			xhr.open("get", url, true);
+			xhr.send(null);
+
+			//post
+			function postDataFormat(obj) {
+				if(typeof obj != "object") {
+					return;
+				}
+				//支持formdata的浏览器
+				if(typeof FormData == "function") {
+					var data = new FormData();
+					for(var atr in obj) {
+						data.append(atr, obj[atr]);
+					}
+					return data;
+				} else {
+					//不支持formdata的浏览器
+					var arr = new Array();
+					var i = 0;
+					for(var atr in obj) {
+						atr[i] = encodeURIComponent(atr) + "=" + encodeURIComponent(obj[atr]);
+						i++;
+					}
+					return arr.join("&");
+				}
+			}
+
+			function myXMLRequest() {
+				createXML();
+				if(!xmlhttp) {
+					return;
+				}
+				xmlhttp.open("POST", "http://moyu.youledi.cn/index.php/Pc/My/myInfo", true);
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4) {
+						console.log("数据加载中...");
+						if(xmlhttp.status == 200) {
+							alert(JSON.stringify(xmlhttp.responseText));
+						}
+					}
+				}
+				//不支持formdata的浏览器的处理
+				if(typeof FormData == "undefined") {
+					xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				}
+				xmlhttp.send(postDataFormat({
+					id: 34
+				}));
+			}
+
+			myXMLRequest();
+		</script>
+	</head>
+
+	<body>
+
+	</body>
+
+</html>
