@@ -19,14 +19,14 @@
 			 * 优化遍历法
 			 */
 			var dealRepeatArray1 = function() {
-				var array1 = [1, 2,1, 2, 4, 5, 6,7, 6, 2, 1];
+				var array1 = [1, 2, 1, 2, 4, 5, 6, 7, 6, 2, 1];
 				var tmpArray = [];
 				for(var i = 0; i < array1.length; i++) {
-					for(var j=i+1;j<array1.length;j++){
-					    if(array1[i]==array1[j]){					    	
-					    	i++;
-					    	j=i;						    	
-					    }
+					for(var j = i + 1; j < array1.length; j++) {
+						if(array1[i] == array1[j]) {
+							i++;
+							j = i;
+						}
 					}
 					console.log(array1[i])
 					tmpArray.push(array1[i]);
@@ -38,19 +38,100 @@
 			 * ---
 			 * 最简单处理方式
 			 */
-			var dealRepeatArray2=function(){
-				var array1 = [1, 2,1, 2, 4, 5, 6,7, 6, 2, 1];
+			var dealRepeatArray2 = function() {
+				var array1 = [1, 2, 1, 2, 4, 5, 6, 7, 6, 2, 1];
 				var tmpArray = [];
-				for(var i=0;i<array1.length;i++){				
-					if(tmpArray.indexOf(array1[i])>-1){
+				for(var i = 0; i < array1.length; i++) {
+					if(tmpArray.indexOf(array1[i]) > -1) {
 						continue;
-					}else{
+					} else {
 						tmpArray.push(array1[i]);
 					}
 				}
 				console.log(JSON.stringify(tmpArray));
-			}();
+			};
+
+			/*
+			 * 数组排序
+			 * ---
+			 * 冒泡排序
+			 */
+			var dealSortArray = function() {
+				var array1 = [1, 2, 1, 2, 4, 5, 6, 7, 6, 2, 1];
+				var tmpArray = [];
+				for(var i = 0; i < array1.length; i++) {
+					tmpArray.push(array1[i]);
+					for(var j = 1; j < tmpArray.length; j++) {
+						if(array1[i] < tmpArray[i - j]) {
+							tmpArray[i - j + 1] = tmpArray[i - j];
+							tmpArray[i - j] = array1[i];
+						}
+					}
+				}
+				console.log(JSON.stringify(tmpArray));
+			};
+
+			/*
+			 * 红包算法
+			 */
+			var moneySortArray = function() {
+				for(var m = 0; m < 100; m++) {
+					var money = 100; //红包金额
+					var member = 5; //红包个数
+					var average = 1 / member;
+					//按红包个数计算出的人均基本值这里是0.2
+					var resultArray = {};
+					var percontain = 0;
+					for(var i = 0; i < member; i++) {
+						var per, num;
+						var upNum;
+						if(i == (member - 1)) {
+							per = average - percontain;
+							num = (money * per).toFixed(2);
+						} else {
+							if(average < Math.abs(percontain) || (i == (member - 2))) {
+								if(percontain > 0) {
+									upNum = -(Math.abs(percontain) - average) - Math.random() * (2 * average - Math.abs(percontain));
+								} else {
+									upNum = (Math.abs(percontain) - average) + Math.random() * (2 * average - Math.abs(percontain));
+								}
+							} else {
+								upNum = average - Math.random() * 2 * average;
+							}
+
+							per = average + upNum;
+							num = (money * per).toFixed(2);
+						}
+						percontain = percontain + upNum;
+						resultArray[per] = num;
+					}
+					console.log(JSON.stringify(resultArray));
+				}
+			}
 			
+			/*
+			 * 数组排序
+			 * ---
+			 * 快速排序算法（冒泡+递归）
+			 */
+			var fastSortArray=function(marray){
+				if(marray.length<=1){
+					return marray;
+				}
+			    var midNum=Math.floor(marray.length/2);
+			    var midValue=marray.splice(midNum,1)[0];
+			    var leftArray=[];
+			    var rightArray=[];
+			    for(var i=0;i<marray.length;i++){
+			    	if(midValue>=marray[i]){
+			    		leftArray.push(marray[i]);
+			    	}else{
+			    		rightArray.push(marray[i]);
+			    	}
+			    }
+			    return fastSortArray(leftArray).concat([midValue],fastSortArray(rightArray));
+			}
+			console.log(fastSortArray([1,2,34,5])); // 1 2 5 34
 		</script>
 	</body>
 
