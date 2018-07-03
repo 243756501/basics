@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			/*
+			 * 数组去重
+			 * ---
+			 * 优化遍历法
+			 */
+			var dealRepeatArray1 = function() {
+				var array1 = [1, 2,1, 2, 4, 5, 6,7, 6, 2, 1];
+				var tmpArray = [];
+				for(var i = 0; i < array1.length; i++) {
+					for(var j=i+1;j<array1.length;j++){
+					    if(array1[i]==array1[j]){					    	
+					    	i++;
+					    	j=i;						    	
+					    }
+					}
+					console.log(array1[i])
+					tmpArray.push(array1[i]);
+				}
+				console.log(JSON.stringify(tmpArray));
+			};
+			/*
+			 * 数组去重
+			 * ---
+			 * 最简单处理方式
+			 */
+			var dealRepeatArray2=function(){
+				var array1 = [1, 2,1, 2, 4, 5, 6,7, 6, 2, 1];
+				var tmpArray = [];
+				for(var i=0;i<array1.length;i++){				
+					if(tmpArray.indexOf(array1[i])>-1){
+						continue;
+					}else{
+						tmpArray.push(array1[i]);
+					}
+				}
+				console.log(JSON.stringify(tmpArray));
+			}();
+			
+		</script>
+	</body>
+
+</html>
