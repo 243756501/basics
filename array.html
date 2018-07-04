@@ -128,10 +128,21 @@
 			    	}else{
 			    		rightArray.push(marray[i]);
 			    	}
+			    	
 			    }
 			    return fastSortArray(leftArray).concat([midValue],fastSortArray(rightArray));
 			}
 			console.log(fastSortArray([1,2,34,5])); // 1 2 5 34
+			
+			/*
+			 * 数组最大最小值
+			 */
+			var maxOrminArray=function(){
+				var arr= [3,43,23,45,65,90];
+				var max=Math.max.apply(null,arr);
+				var min=Math.min.apply(null,arr);
+				console.log(max+"=="+min);
+			};
 		</script>
 	</body>
 
