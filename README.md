@@ -12,7 +12,7 @@ basic.html   -  常用工具方法
 ---
 #网站优化
 
-图片懒加载
+#图片懒加载
 图片sprite
 css合并
 js合并
@@ -55,8 +55,7 @@ js合并
 }
 
 或者采用viewport,js获取设备像素比 动态创建meta标签
-
-   (function() {
+      (function() {
        var scale = 1.0;
        if (window.devicePixelRatio === 2) {
            scale *= 0.5;
