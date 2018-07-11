@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+			 * Promise构造函数时接受一个参数，是函数，并且传入两个参数 resolve reject固定
+			 * resolve 异步操作执行成功后的回调函数 将promise状态设置成fullfiled
+			 * reject 异步操作执行失败后的回调函数 将promise状态设置为rejected
+			 * 
+			 * ----
+			 * 
+			 * 本质上和回调的效果是一样的，但是当出现回调中包含异步的时候，多层嵌套就比较麻烦，promise的链式操作就显的非常有意义
+			 * 
+			 * 
+			 * 
+			 */
+
+			//常规promise
+			function runAsync() {
+				var p = new Promise(function(resolve, reject) {
+					//做一些异步操作
+					setTimeout(function() {
+						console.log('执行完成');
+						resolve('随便什么数据');
+					}, 2000);
+				});
+				return p;
+			}
+			runAsync().then(function(data) {
+				console.log(data);
+			})
+
+			//常规回调
+			function runAsync2(callback) {
+				setTimeout(function() {
+					console.log('执行完成2');
+					callback('随便什么数据2');
+				}, 2000);
+			}
+
+			runAsync2(function(data) {
+				console.log(data);
+			});
+
+			//promise链式操作
+			runAsync11()
+				.then(function(data) {
+					console.log(data);
+					return runAsync12();
+				})
+				.then(function(data) {
+					console.log(data);
+					return runAsync13();
+				})
+				.then(function(data) {
+					console.log(data);
+				});
+
+			function runAsync11() {
+				var p = new Promise(function(resolve, reject) {
+					//做一些异步操作
+					setTimeout(function() {
+						console.log('异步任务1执行完成');
+						resolve('随便什么数据1');
+					}, 1000);
+				});
+				return p;
+			}
+
+			function runAsync12() {
+				var p = new Promise(function(resolve, reject) {
+					//做一些异步操作
+					setTimeout(function() {
+						console.log('异步任务2执行完成');
+						resolve('随便什么数据2');
+					}, 2000);
+				});
+				return p;
+			}
+
+			function runAsync13() {
+				var p = new Promise(function(resolve, reject) {
+					//做一些异步操作
+					setTimeout(function() {
+						console.log('异步任务3执行完成');
+						resolve('随便什么数据3');
+					}, 2000);
+				});
+				return p;
+			}
+		</script>
+	</body>
+
+</html>

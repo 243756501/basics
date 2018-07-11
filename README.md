@@ -4,7 +4,7 @@
 ajax.html    -  ajax深入
 array.html   -  常规数组操作
 basic.html   -  常用工具方法
-
+promise.html -  promise
 
 
 
